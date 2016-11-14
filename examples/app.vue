@@ -105,18 +105,40 @@
 
 <template>
   <div id="app">
-    <main-header></main-header>
+    <main-header v-if="lang !== 'play'"></main-header>
     <div class="main-cnt">
       <router-view></router-view>
     </div>
-    <main-footer></main-footer>
+    <main-footer v-if="lang !== 'play'"></main-footer>
   </div>
 </template>
 
 <script>
+  import { use } from 'main/locale';
+  import zhLocale from 'main/locale/lang/zh-CN';
+  import enLocale from 'main/locale/lang/en';
+  use(location.href.indexOf('zh-CN') > -1 ? zhLocale : enLocale);
+
   export default {
     name: 'app',
+
+    computed: {
+      lang() {
+        return this.$route.path.split('/')[1] || 'zh-CN';
+      }
+    },
+
+    watch: {
+      lang() {
+        this.localize();
+      }
+    },
+
     methods: {
+      localize() {
+        use(this.lang === 'zh-CN' ? zhLocale : enLocale);
+      },
+
       renderAnchorHref() {
         if (/changelog/g.test(location.href)) return;
         const anchors = document.querySelectorAll('h2 a,h3 a');
@@ -143,6 +165,7 @@
     },
 
     mounted() {
+      this.localize();
       this.renderAnchorHref();
       this.goAnchor();
     },

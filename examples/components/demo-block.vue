@@ -8,8 +8,8 @@
     <div class="meta">
       <div class="description">
         <slot></slot>
-        <el-tooltip effect="dark" content="前往 jsfiddle.net 运行此实例" placement="right">
-          <el-button size="small" type="primary" @click="goJsfiddle">在线运行</el-button>
+        <el-tooltip effect="dark" :content="langConfig['tooltip-text']" placement="right">
+          <el-button size="small" type="primary" @click="goJsfiddle">{{ langConfig['button-text'] }}</el-button>
         </el-tooltip>
       </div>
       <slot name="highlight"></slot>
@@ -150,6 +150,8 @@
 </style>
 
 <script type="text/babel">
+  import compoLang from '../i18n/component.json';
+
   export default {
     data() {
       return {
@@ -167,12 +169,12 @@
 
     methods: {
       goJsfiddle() {
-        const { script, html } = this.jsfiddle;
+        const { script, html, style } = this.jsfiddle;
         const resourcesTpl = '<scr' + 'ipt src="//unpkg.com/vue/dist/vue.js"></scr' + 'ipt>' +
-        '\n<scr' + 'ipt src="//unpkg.com/element-ui@next/lib/index.js"></scr' + 'ipt>';
+        '\n<scr' + 'ipt src="//unpkg.com/element-ui/lib/index.js"></scr' + 'ipt>';
         let jsTpl = (script || '').replace(/export default/, 'var Main =').trim();
         let htmlTpl = `${resourcesTpl}\n<div id="app">\n${html.trim()}\n</div>`;
-        let cssTpl = '@import url("//unpkg.com/element-ui@next/lib/theme-default/index.css");';
+        let cssTpl = `@import url("//unpkg.com/element-ui/lib/theme-default/index.css");\n${(style || '').trim()}\n`;
         jsTpl = jsTpl
           ? jsTpl + '\nvar Ctor = Vue.extend(Main)\nnew Ctor().$mount(\'#app\')'
           : 'new Vue().$mount(\'#app\')';
@@ -180,7 +182,8 @@
           js: jsTpl,
           css: cssTpl,
           html: htmlTpl,
-          panel_js: 3
+          panel_js: 3,
+          panel_css: 1
         };
         const form = document.createElement('form');
         const node = document.createElement('textarea');
@@ -200,8 +203,16 @@
     },
 
     computed: {
+      lang() {
+        return this.$route.path.split('/')[1];
+      },
+
+      langConfig() {
+        return compoLang.filter(config => config.lang === this.lang)[0]['demo-block'];
+      },
+
       blockClass() {
-        return `demo-${ this.$router.currentRoute.path.split('/').pop() }`;
+        return `demo-${ this.lang } demo-${ this.$router.currentRoute.path.split('/').pop() }`;
       },
 
       iconClass() {
@@ -209,7 +220,7 @@
       },
 
       controlText() {
-        return this.isExpanded ? '隐藏代码' : '显示代码';
+        return this.isExpanded ? this.langConfig['hide-text'] : this.langConfig['show-text'];
       },
 
       codeArea() {

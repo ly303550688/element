@@ -3,6 +3,7 @@
     methods: {
       open() {
         this.$alert('这是一段内容', '标题名称', {
+          confirmButtonText: '确定',
           callback: action => {
             this.$message({
               type: 'info',
@@ -14,6 +15,8 @@
 
       open2() {
         this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
           setTimeout(() => {
@@ -34,6 +37,8 @@
 
       open3() {
         this.$prompt('请输入邮箱', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
           inputPattern: /[\w!#$%&'*+/=?^_`{|}~-]+(?:\.[\w!#$%&'*+/=?^_`{|}~-]+)*@(?:[\w](?:[\w-]*[\w])?\.)+[\w](?:[\w-]*[\w])?/,
           inputErrorMessage: '邮箱格式不正确'
         }).then(({ value }) => {
@@ -58,7 +63,9 @@
         this.$msgbox({
           title: '消息',
           message: '这是一段内容, 这是一段内容, 这是一段内容, 这是一段内容, 这是一段内容, 这是一段内容, 这是一段内容',
-          showCancelButton: true
+          showCancelButton: true,
+          confirmButtonText: '确定',
+          cancelButtonText: '取消'
         }).then(action => {
           setTimeout(() => {
             this.$message({
@@ -90,6 +97,7 @@
     methods: {
       open() {
         this.$alert('这是一段内容', '标题名称', {
+          confirmButtonText: '确定',
           callback: action => {
             this.$message({
               type: 'info',
@@ -120,6 +128,8 @@
     methods: {
       open2() {
         this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
           this.$message({
@@ -155,6 +165,8 @@
     methods: {
       open3() {
         this.$prompt('请输入邮箱', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
           inputPattern: /[\w!#$%&'*+/=?^_`{|}~-]+(?:\.[\w!#$%&'*+/=?^_`{|}~-]+)*@(?:[\w](?:[\w-]*[\w])?\.)+[\w](?:[\w-]*[\w])?/,
           inputErrorMessage: '邮箱格式不正确'
         }).then(({ value }) => {
@@ -193,7 +205,9 @@
         this.$msgbox({
           title: '消息',
           message: '这是一段内容, 这是一段内容, 这是一段内容, 这是一段内容, 这是一段内容, 这是一段内容, 这是一段内容',
-          showCancelButton: true
+          showCancelButton: true,
+          confirmButtonText: '确定',
+          cancelButtonText: '取消'
         }).then(action => {
           this.$message({
             type: 'info',
@@ -235,6 +249,8 @@ import { MessageBox } from 'element-ui';
 | confirmButtonText | 确定按钮的文本内容 | string | — | 确定 |
 | cancelButtonClass | 取消按钮的自定义类名 | string | — | — |
 | confirmButtonClass | 确定按钮的自定义类名 | string | — | — |
+| closeOnClickModal | 是否可通过点击遮罩关闭 MessageBox | boolean | — | true（以 alert 方式调用时为 false） |
+| closeOnPressEscape | 是否可通过按下 ESC 键关闭 MessageBox | boolean | — | false |
 | showInput | 是否显示输入框 | boolean | — | false（以 prompt 方式调用时为 true）|
 | inputPlaceholder | 输入框的占位符 | string | — | — |
 | inputPattern | 输入框的校验表达式 | regexp | — | — |

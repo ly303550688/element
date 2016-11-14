@@ -37,6 +37,17 @@
   on-color="#13ce66"
   off-color="#ff4949">
 </el-switch>
+
+<script>
+  export default {
+    data() {
+      return {
+        value1: true,
+        value2: true
+      }
+    }
+  };
+</script>
 ```
 :::
 
@@ -55,6 +66,16 @@
   v-model="value3"
   disabled>
 </el-switch>
+
+<script>
+  export default {
+    data() {
+      return {
+        value3: true
+      }
+    }
+  };
+</script>
 ```
 :::
 
@@ -75,4 +96,4 @@
 ### Events
 | 事件名称      | 说明    | 回调参数      |
 |---------- |-------- |---------- |
-| change  | switch 状态发生变化时的回调函数    | — |
+| change  | switch 状态发生变化时的回调函数    | 新状态的布尔值 |

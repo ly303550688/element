@@ -120,7 +120,7 @@
       <el-button class="fr">
         <a href="https://github.com/ElemeFE/element/releases" target="_blank">Github Releases</a>
       </el-button>
-      更新日志
+      <%= 1 >
     </div>
     <ul class="timeline" ref="timeline">
     </ul>
@@ -128,7 +128,7 @@
   </div>
 </template>
 <script>
-  import ChangeLog from '../../CHANGELOG.md';
+  import ChangeLog from '../../../CHANGELOG.<%= 2 >.md';
   export default {
     components: {
       ChangeLog

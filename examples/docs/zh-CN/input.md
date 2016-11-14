@@ -1,6 +1,6 @@
 <script>
   var Vue = require('vue');
-  Vue.component('my-item', {
+  Vue.component('my-item-zh', {
     functional: true,
     render: function (h, ctx) {
       var item = ctx.props.item;
@@ -16,6 +16,7 @@
   export default {
     data() {
       return {
+        restaurants: [],
         input: '',
         input1: '',
         input2: '',
@@ -121,9 +122,9 @@
 </script>
 
 <style>
-  .demo-input {
+  .demo-input.demo-zh-CN {
     .el-select .el-input {
-      width: 100px;
+      width: 110px;
     }
     .text {
       font-size: 14px;
@@ -209,6 +210,16 @@
   placeholder="请输入内容"
   v-model="input">
 </el-input>
+
+<script>
+export default {
+  data() {
+    return {
+      input: ''
+    }
+  }
+}
+</script>
 ```
 :::
 
@@ -222,6 +233,16 @@
   v-model="input1"
   :disabled="true">
 </el-input>
+
+<script>
+export default {
+  data() {
+    return {
+      input1: ''
+    }
+  }
+}
+</script>
 ```
 :::
 
@@ -237,6 +258,21 @@
   v-model="input2"
   @click="handleIconClick">
 </el-input>
+
+<script>
+export default {
+  data() {
+    return {
+      input2: ''
+    }
+  },
+  methods: {
+    handleIconClick(ev) {
+      console.log(ev);
+    }
+  }
+}
+</script>
 ```
 :::
 
@@ -252,6 +288,16 @@
   placeholder="请输入内容"
   v-model="textarea">
 </el-input>
+
+<script>
+export default {
+  data() {
+    return {
+      textarea: ''
+    }
+  }
+}
+</script>
 ```
 :::
 
@@ -261,20 +307,41 @@
 
 ::: demo 可通过 slot 来指定在 input 中前置或者后置内容。
 ```html
-<el-input placeholder="请输入内容" v-model="input3">
-  <template slot="prepend">Http://</template>
-</el-input>
-<el-input placeholder="请输入内容" v-model="input4">
-  <template slot="append">.com</template>
-</el-input>
-<el-input placeholder="请输入内容" v-model="input5" style="width: 300px;">
-  <el-select v-model="select" slot="prepend">
-    <el-option label="餐厅名" value="1"></el-option>
-    <el-option label="订单号" value="2"></el-option>
-    <el-option label="用户电话" value="3"></el-option>
-  </el-select>
-  <el-button slot="append" icon="search"></el-button>
-</el-input>
+<template>
+  <el-input placeholder="请输入内容" v-model="input3">
+    <template slot="prepend">Http://</template>
+  </el-input>
+  <el-input placeholder="请输入内容" v-model="input4">
+    <template slot="append">.com</template>
+  </el-input>
+  <el-input placeholder="请输入内容" v-model="input5" style="width: 300px;">
+    <el-select v-model="select" slot="prepend" placeholder="请选择">
+      <el-option label="餐厅名" value="1"></el-option>
+      <el-option label="订单号" value="2"></el-option>
+      <el-option label="用户电话" value="3"></el-option>
+    </el-select>
+    <el-button slot="append" icon="search"></el-button>
+  </el-input>
+</template>
+
+<style>
+.el-select .el-input {
+  width: 100px;
+}
+</style>
+
+<script>
+export default {
+  data() {
+    return {
+      input3: '',
+      input4: '',
+      input5: '',
+      select: ''
+    }
+  }
+}
+</script>
 ```
 :::
 
@@ -303,6 +370,19 @@
     v-model="input9">
   </el-input>
 </div>
+
+<script>
+export default {
+  data() {
+    return {
+      input6: '',
+      input7: '',
+      input8: '',
+      input9: ''
+    }
+  }
+}
+</script>
 ```
 :::
 
@@ -422,20 +502,41 @@
 
 可自定义输入建议的显示
 
-::: demo 
+::: demo
 ```html
 <el-autocomplete
   class="my-autocomplete"
   v-model="state3"
   :fetch-suggestions="querySearch"
-  custom-item="my-item"
+  custom-item="my-item-zh"
   placeholder="请输入内容"
   @select="handleSelect"
 ></el-autocomplete>
 
+<style>
+.my-autocomplete {
+  li {
+    line-height: normal;
+    padding: 7px;
+
+    .name {
+      text-overflow: ellipsis;
+      overflow: hidden;
+    }
+    .addr {
+      font-size: 12px;
+      color: #b4b4b4;
+    }
+
+    .highlighted .addr {
+      color: #ddd;
+    }
+  }
+}
+</style>
+
 <script>
-  var Vue = require('vue');
-  Vue.component('my-item', {
+  Vue.component('my-item-zh', {
     functional: true,
     render: function (h, ctx) {
       var item = ctx.props.item;
@@ -535,7 +636,7 @@
 
 从服务端搜索数据
 
-::: demo 
+::: demo
 ```html
 <el-autocomplete
   v-model="state4"
@@ -631,7 +732,7 @@
 ```
 :::
 
-### Input API
+### Input Attributes
 
 | 参数          | 说明            | 类型            | 可选值                 | 默认值   |
 |-------------  |---------------- |---------------- |---------------------- |-------- |
@@ -645,13 +746,21 @@
 | icon          | 输入框尾部图标    | string          | — | — |
 | rows          | 输入框行数，只对 `type="textarea"` 有效  |  number | — |  2   |
 | autosize      | 自适应内容高度，只对 `type="textarea"` 有效，可传入对象，如，{ minRows: 2, maxRows: 6 }  |  boolean/object | — |  false   |
+| auto-complete | 原生属性，自动补全 | string | on, off | off |
+| name | 原生属性 | string | - | -|
+| max | 原生属性，设置最大值 | * | - | - |
+| min | 原生属性，设置最小值 | * | - | - |
+| autofocus | 原生属性，自动获取焦点 | boolean | true, false | false |
+| form | 原生属性 | string | - | - |
 
 ### Input Events
 | 事件名称 | 说明 | 回调参数 |
 |---------|--------|---------|
 | click | 点击 Input 内的图标时触发 | event |
+| blur | 在 Input 失去焦点时触发 | event |
+| focus | 在 Input 或得焦点时触发 | event |
 
-### Autocomplete API
+### Autocomplete Attributes
 
 | 参数          | 说明            | 类型            | 可选值                 | 默认值   |
 |-------------  |---------------- |---------------- |---------------------- |-------- |

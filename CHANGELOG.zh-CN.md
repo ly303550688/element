@@ -1,10 +1,31 @@
 ## 更新日志
 
+### 1.0.1
+*2016-XX-XX*
+
+- 修复 Pagination 错误地多次触发 `current-change` 事件的问题
+- 修复 Switch 在 Form 中的样式错误，#967
+- 修复 Loading 在某些情况下错误地锁定 `body` 滚动的问题，#968
+- Col 组件的 `span` 属性不再是必填属性，在省略的情况下其默认值为 `24`
+- 新增 DatePicker `disabled` 和 `editable` 属性, #976
+- 修复 DatePicker 的 `readonly` 与原生行为一致，现在通过设置 editable=false 禁止输入但是可通过弹框选日期, #976
+- 新增 Message 和 Notification 的 `close` 方法，用于手动关闭实例
+- 新增 DatePicker 清除功能, #759
+- 修复 Form 重置日期报错, #937
+- 修复 Table 的 inline-template 在 vue-loader 9.9.0 渲染报错
+- 新增 Step 支持内容居中对齐, #994
+- 修复 Upload 单独引入时提示 progress 组件不存在, #1013
+- Layout 支持响应式布局
+
 ### 1.0.0
+
 *2016-11-9*
+
 - 修复 TimePicker 选择范围时结束时间小于开始时间会重置开始时间, #894
 - 修复结合 `vue-i18n` 使用时会提示不能覆盖 `$t` 方法的问题
-
+- 新增 Loading 自定义加载文案的功能，并优化了视觉表现
+- 修复 Input blur 事件的参数不是 event 对象的问题
+- `window.ELEMENT.locale.use` 改成 `window.ELEMENT.locale`
 
 ### 1.0.0-rc.9
 

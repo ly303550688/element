@@ -379,7 +379,8 @@
 
   --switch-font-size: var(--font-size-base);
   --switch-core-border-radius: 12px;
-  --switch-size: 46px 22px;
+  --switch-width: 46px;
+  --switch-height: 22px;
   --switch-button-size: 16px;
 
   /* Dialog
@@ -539,4 +540,9 @@
   --datepicker-inrange-hover-color: #AFDCFF;
   --datepicker-active-color: var(--color-primary);
   --datepicker-text-hover-color: #20a0ff;
+
+  /* Loading
+  --------------------------*/
+  --loading-spinner-size: 42px;
+  --loading-fullscreen-spinner-size: 50px;
 }

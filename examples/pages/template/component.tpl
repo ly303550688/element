@@ -42,7 +42,7 @@
   <div class="page-container page-component">
     <el-row>
       <el-col :span="6">
-        <side-nav :data="navsData" base="/component"></side-nav>
+        <side-nav :data="navsData[lang]" :base="`/${ lang }/component`"></side-nav>
       </el-col>
       <el-col :span="18">
         <router-view class="content"></router-view>
@@ -52,11 +52,12 @@
   </div>
 </template>
 <script>
-  import { navs } from '../route.config';
+  import navsData from '../../nav.config.json';
   export default {
     data() {
       return {
-        navsData: navs
+        lang: this.$route.meta.lang,
+        navsData
       };
     }
   };

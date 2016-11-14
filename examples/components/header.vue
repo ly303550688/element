@@ -51,6 +51,9 @@
       padding: 0;
       margin: 0;
     }
+    .nav-logo {
+      vertical-align: sub;
+    }
     .nav-item {
       margin: 0;
       float: left;
@@ -58,6 +61,27 @@
       position: relative;
       cursor: pointer;
       margin-left: 20px;
+    
+      &:last-child {
+        cursor: default;
+        margin-left: 34px;
+        span {
+          opacity: .8;
+        }
+
+        .nav-lang {
+          cursor: pointer;
+          display: inline-block;
+          height: 100%;
+          &:hover {
+            opacity: 1;
+          }
+          &.active {
+            font-weight: 700;
+            opacity: 1;
+          }
+        }
+      }
 
       a {
         text-decoration: none;
@@ -68,6 +92,10 @@
         &.active,
         &:hover {
           opacity: 1;
+        }
+         
+        &.active {
+          font-weight: 700;
         }
 
         &.active::before {
@@ -98,26 +126,46 @@
       'header-home': isHome
     }">
       <div class="container">
-        <h1><router-link to="/">Element<span>Beta</span></router-link></h1>
+        <h1><router-link :to="`/${ lang }`">
+          <img
+            src="../assets/images/element-logo.svg"
+            alt="element-logo"
+            class="nav-logo">
+        </router-link></h1>
         <ul class="nav">
           <li class="nav-item">
             <router-link
               active-class="active"
-              to="/guide">指南
+              :to="`/${ lang }/guide`">{{ langConfig.guide }}
             </router-link>
           </li>
           <li class="nav-item">
             <router-link
               active-class="active"
-              to="/component">组件
+              :to="`/${ lang }/component`">{{ langConfig.components }}
             </router-link>
           </li>
           <li class="nav-item">
             <router-link
               active-class="active"
-              to="/resource"
-              exact>资源
+              :to="`/${ lang }/resource`"
+              exact>{{ langConfig.resource }}
             </router-link>
+          </li>
+          <li class="nav-item">
+            <span
+              class="nav-lang"
+              :class="{ 'active': lang === 'zh-CN' }"
+              @click="switchLang('zh-CN')">
+              中文
+            </span>
+            <span> / </span>
+            <span
+              class="nav-lang"
+              :class="{ 'active': lang === 'en-US' }"
+              @click="switchLang('en-US')">
+              En
+            </span>
           </li>
         </ul>
       </div>
@@ -125,6 +173,8 @@
   </div>
 </template>
 <script>
+  import compoLang from '../i18n/component.json';
+
   export default {
     data() {
       return {
@@ -134,13 +184,28 @@
       };
     },
     watch: {
-      '$route.path'(val) {
-        this.isHome = val === '/';
+      '$route.path'() {
+        this.isHome = this.$route.name === 'home';
         this.headerStyle.backgroundColor = `rgba(32, 160, 255, ${ this.isHome ? '0' : '1' })`;
       }
     },
+    computed: {
+      lang() {
+        return this.$route.path.split('/')[1] || 'zh-CN';
+      },
+      langConfig() {
+        return compoLang.filter(config => config.lang === this.lang)[0]['header'];
+      }
+    },
+    methods: {
+      switchLang(targetLang) {
+        if (this.lang === targetLang) return;
+        localStorage.setItem('ELEMENT_LANGUAGE', targetLang);
+        this.$router.push(this.$route.path.replace(this.lang, targetLang));
+      }
+    },
     mounted() {
-      this.isHome = this.$route.path === '/';
+      this.isHome = this.$route.name === 'home';
       function scroll(fn) {
         window.addEventListener('scroll', () => {
           fn();

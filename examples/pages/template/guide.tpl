@@ -5,6 +5,9 @@
     .content {
       padding-left: 25px;
       margin-left: -1px;
+      h2 {
+        margin-bottom: 10px;
+      }
 
       h3 {
         font-size: 22px;
@@ -13,6 +16,7 @@
         color: #1f2d3d;
       }
       p {
+        line-height: 1.6;
         font-size: 14px;
         color: #5e6d82;
       }
@@ -49,7 +53,7 @@
   <div class="page-container page-guide">
     <el-row>
       <el-col :span="5">
-        <side-nav :data="navsData" base="/guide"></side-nav>
+        <side-nav :data="navsData" :base="`/${ lang }/guide`"></side-nav>
       </el-col>
       <el-col :span="19">
         <router-view class="content"></router-view>
@@ -61,14 +65,15 @@
   export default {
     data() {
       return {
+        lang: this.$route.meta.lang,
         navsData: [
           {
             path: '/design',
-            name: '设计原则'
+            name: '<%= 1 >'
           },
           {
             path: '/nav',
-            name: '导航'
+            name: '<%= 2 >'
           }
         ]
       };
